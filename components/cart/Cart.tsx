@@ -1,15 +1,15 @@
 "use server";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { ShoppingBag } from "lucide-react";
 import { ShoppingCart } from "@/lib/db/cart";
 import Image from "next/image";
 import Btn from "../btn";
-import RemoveFromCart from "../product/RemoveFromCartButton";
 import { decreaseQuantity } from "./actions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import AddToCartButton from "../product/AddToCartButton";
 import { increaseQuantity } from "@/app/products/[productId]/actions";
+import DecreaseQuantityBtn from "./DecreaseQuantityBtn";
+import IncreaseQuantityBtn from "./IncreaseQuantityBtn";
 
 interface CartProps {
   cart: ShoppingCart | null;
@@ -29,6 +29,7 @@ const Cart = async ({ cart }: CartProps) => {
         <ShoppingBag className="w-6 h-6 text-muted-foreground" />
       </SheetTrigger>
       <SheetContent className="w-[400px] lg:w-[700px]">
+        <SheetTitle>Your shopping bag</SheetTitle>
         <div className="mx-auto w-full">
           {cart?.CartItem.map((item) => (
             <div
@@ -47,11 +48,11 @@ const Cart = async ({ cart }: CartProps) => {
                   {item.product.name}
                 </h1>
                 <span className="text-base capitalize font-medium text-gray-700">
-                  {item.product.price * item.quantity}
+                  ${item.product.price * item.quantity}
                 </span>
               </div>
               <div className="flex items-center justify-between w-full">
-                <RemoveFromCart
+                <DecreaseQuantityBtn
                   decreaseQuantity={decreaseQuantity}
                   ownerId={userId!}
                   userId={userId!}
@@ -61,7 +62,7 @@ const Cart = async ({ cart }: CartProps) => {
                 <span className="text-base capitalize font-medium text-gray-700">
                   {item.quantity}
                 </span>
-                <AddToCartButton
+                <IncreaseQuantityBtn
                   increaseQuantity={increaseQuantity}
                   ownerId={userId!}
                   productId={item.product.id as unknown as string}

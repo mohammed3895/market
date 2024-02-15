@@ -17,7 +17,7 @@ const ProductList = async () => {
       <h1 className="text-2xl text-center font-medium tracking-wide text-primary capitalize my-12 mx-auto w-fit py-4 border-b">
         New Trends
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 my-12">
         {products.slice(0, 4).map((product: ProductCardProps, i: number) => (
           <List index={i} product={product} key={product.id} />
         ))}
