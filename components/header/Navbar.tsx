@@ -7,10 +7,10 @@ import { getCart } from "@/lib/db/cart";
 import { cn } from "@/lib/utils";
 import UserMenu from "../user/UserMenu";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { config } from "@/auth";
 
 const Navbar = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(config);
   const user = session?.user;
   const userId = user?.id as string;
 

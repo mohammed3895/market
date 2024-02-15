@@ -8,7 +8,7 @@ import AddToCartButton from "@/components/product/AddToCartButton";
 import { increaseQuantity } from "./actions";
 import List from "@/components/product/List";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import {config} from '@/auth'
 
 type Props = {
   params: { productId: string };
@@ -43,7 +43,7 @@ const ProductDetails = async ({ params }: Props) => {
     take: 4,
   });
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(config);
   const user = session?.user;
 
   const userId = user?.email as string;

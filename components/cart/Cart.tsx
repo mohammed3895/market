@@ -6,17 +6,17 @@ import Image from "next/image";
 import Btn from "../btn";
 import { decreaseQuantity } from "./actions";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { increaseQuantity } from "@/app/products/[productId]/actions";
 import DecreaseQuantityBtn from "./DecreaseQuantityBtn";
 import IncreaseQuantityBtn from "./IncreaseQuantityBtn";
+import { config } from "@/auth";
 
 interface CartProps {
   cart: ShoppingCart | null;
 }
 
 const Cart = async ({ cart }: CartProps) => {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(config);
   const user = session?.user;
   const userId = user?.id;
 
