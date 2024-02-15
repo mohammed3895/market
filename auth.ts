@@ -21,6 +21,9 @@ export const config = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET! as string,
     }),
   ],
+  session: {
+    strategy: "database",
+  },
   secret: process.env.NEXTAUTH_SECRET,
 } satisfies NextAuthOptions;
 
