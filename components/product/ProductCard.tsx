@@ -16,17 +16,19 @@ export interface ProductCardProps {
   price: number;
 }
 
-const ProductCard = ({
+const ProductCard: any = ({
   product,
+  ownerId,
   isVisible,
 }: {
   product: ProductCardProps;
+  ownerId: string;
   isVisible: boolean;
 }) => {
   return (
     <div
       className={cn(
-        "bg-white p-0 rounded-lg shadow-sm relative invisible animate-in fade-in-5",
+        "bg-white p-0 rounded-lg shadow-sm relative invisible animate-in fade-in-5 w-full",
         { visible: isVisible }
       )}
     >
@@ -49,7 +51,10 @@ const ProductCard = ({
         </p>
         <div className="mt-6 flex flex-row items-center justify-between w-full gap-2">
           <AddToCartButton
+            title="Add to cart"
+            classname="w-full"
             productId={product.id as unknown as string}
+            ownerId={ownerId}
             increaseQuantity={increaseQuantity}
           />
           <Link

@@ -8,12 +8,14 @@ import { toast } from "sonner";
 interface AddToCartButtonProps {
   productId: string;
   quantity: number;
-  decreaseQuantity: (productId: string, quantity: number) => Promise<void>;
+  userId: string;
+  ownerId: string;
+  decreaseQuantity: (productId: string, ownerId: string) => Promise<void>;
 }
 
 const RemoveFromCart = ({
   productId,
-  quantity,
+  ownerId,
   decreaseQuantity,
 }: AddToCartButtonProps) => {
   const [isPending, startTransision] = useTransition();
@@ -25,13 +27,10 @@ const RemoveFromCart = ({
         className={cn(buttonVariants({ variant: "default" }))}
         onClick={() => {
           startTransision(async () => {
-            await decreaseQuantity(productId, quantity), setSucces(true);
+            await decreaseQuantity(productId, ownerId), setSucces(true);
           });
         }}
       >
-        {isPending && (
-          <Loader2 className="w-4 h-4 text-white animate-spin mr-2" />
-        )}
         -
       </button>
       {/* {isPending && sucsses && toast("Added to cart sucssesfuly")} */}

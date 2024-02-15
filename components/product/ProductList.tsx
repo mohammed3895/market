@@ -1,12 +1,11 @@
 import React from "react";
-import ProductCard from "./ProductCard";
 import MostPopular from "./MostPopular";
-import { Products } from "@/config/Products";
 import prisma from "@/lib/db/db";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "../ui/button";
 import List from "./List";
+import { ProductCardProps } from "./ProductCard";
 
 const ProductList = async () => {
   const products = await prisma.product.findMany({
@@ -19,7 +18,7 @@ const ProductList = async () => {
         New Trends
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12">
-        {Products.slice(0, 4).map((product, i) => (
+        {products.slice(0, 4).map((product: ProductCardProps, i: number) => (
           <List index={i} product={product} key={product.id} />
         ))}
       </div>

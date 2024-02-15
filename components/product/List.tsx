@@ -6,6 +6,7 @@ import ProductCard, { ProductCardProps } from "./ProductCard";
 interface ProductListingProps {
   product: ProductCardProps;
   index: number;
+  ownerId: string;
 }
 
 const List = ({ product, index }: ProductListingProps) => {

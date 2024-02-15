@@ -6,12 +6,18 @@ import { buttonVariants } from "../ui/button";
 import { toast } from "sonner";
 
 interface AddToCartButtonProps {
+  title: string;
+  classname?: string;
   productId: string;
-  increaseQuantity: (productId: string) => Promise<void>;
+  ownerId: string;
+  increaseQuantity: (productId: string, ownerId: string) => Promise<void>;
 }
 
 const AddToCartButton = ({
+  title,
+  classname,
   productId,
+  ownerId,
   increaseQuantity,
 }: AddToCartButtonProps) => {
   const [isPending, startTransision] = useTransition();
@@ -20,18 +26,15 @@ const AddToCartButton = ({
   return (
     <>
       <button
-        className={cn(buttonVariants({ variant: "default" }), "w-full")}
+        className={cn(buttonVariants({ variant: "default" }), classname)}
         onClick={() => {
           setSucces(false);
           startTransision(async () => {
-            await increaseQuantity(productId), setSucces(true);
+            await increaseQuantity(productId, ownerId), setSucces(true);
           });
         }}
       >
-        {isPending && (
-          <Loader2 className="w-4 h-4 text-white animate-spin mr-2" />
-        )}
-        Add to cart
+        {title}
       </button>
       {isPending && sucsses && toast("Added to cart sucssesfuly")}
     </>

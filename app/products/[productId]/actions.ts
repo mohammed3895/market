@@ -3,11 +3,13 @@ import { createCart, getCart } from "@/lib/db/cart";
 import prisma from "@/lib/db/db";
 import { revalidatePath } from "next/cache";
 
-export async function increaseQuantity(productId: string) {
+export async function increaseQuantity(productId: string, ownerId: string) {
   "use server";
-  const cart = (await getCart()) ?? (await createCart());
+  const cart = (await getCart()) ?? (await createCart({ ownerId: ownerId }));
 
-  const cartExist = cart.CartItem.find((item) => item.id === Number(productId));
+  const cartExist = cart.CartItem.find(
+    (item) => (item.product.id as unknown as string) === productId
+  );
 
   if (cartExist) {
     await prisma.cartItem.update({
@@ -24,5 +26,5 @@ export async function increaseQuantity(productId: string) {
     });
   }
 
-  revalidatePath("/products/[id]");
+  revalidatePath("/");
 }

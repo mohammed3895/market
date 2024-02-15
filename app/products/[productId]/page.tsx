@@ -7,6 +7,8 @@ import prisma from "@/lib/db/db";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import { increaseQuantity } from "./actions";
 import List from "@/components/product/List";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type Props = {
   params: { productId: string };
@@ -38,7 +40,13 @@ const ProductDetails = async ({ params }: Props) => {
   });
   const similarProducts = await prisma.product.findMany({
     where: { category: product?.category },
+    take: 4,
   });
+
+  const session = await getServerSession(authOptions);
+  const user = session?.user;
+
+  const userId = user?.email as string;
 
   return (
     <div className="flex flex-col items-start justify-start gap-12">
@@ -87,7 +95,9 @@ const ProductDetails = async ({ params }: Props) => {
             </div>
             <div className="my-6 w-1/3">
               <AddToCartButton
+                title="Add to cart"
                 increaseQuantity={increaseQuantity}
+                ownerId={userId}
                 productId={product.id as unknown as string}
               />
             </div>

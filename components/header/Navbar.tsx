@@ -11,12 +11,15 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
+  const user = session?.user;
+  const userId = user?.id as string;
+
   const cart = await getCart();
 
   return (
     <div
       className={cn(
-        "h-16 w-full p-8 flex items-center justify-between bg-white sticky top-0 inset-x-0 z-50 text-primary shadow-md"
+        "h-16 w-full p-8 flex items-center justify-between bg-white sticky top-0 inset-x-0 z-50 text-primary"
       )}
     >
       <div className="w-full flex items-center justify-between">
@@ -36,10 +39,10 @@ const Navbar = async () => {
           </span>
         </Link>
         <div className="hidden">NavItems</div>
-        <div>
+        <div className="flex items-center space-x-4 lg:space-x-8">
+          <UserMenu session={session} />
           <Cart cart={cart} />
         </div>
-        <UserMenu session={session} />
       </div>
     </div>
   );
