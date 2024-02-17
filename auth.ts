@@ -1,4 +1,4 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import type {
   GetServerSidePropsContext,
@@ -21,6 +21,7 @@ export const config = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET! as string,
     }),
   ],
+
   session: {
     strategy: "database",
   },
